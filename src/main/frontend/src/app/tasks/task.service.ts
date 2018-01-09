@@ -23,7 +23,7 @@ export class TaskService {
     }
 
     addTask(task: Task){
-        return this.http.post('/api/task/save', task).map(
+        return this.http.post('/api/tasks/save', task).map(
             (response)=>response.json()
         );
     }
