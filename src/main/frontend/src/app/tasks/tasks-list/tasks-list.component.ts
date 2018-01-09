@@ -17,13 +17,16 @@ export class TasksListComponent implements OnInit {
         // this.tasks.push(new Task(1,"Task 1", true, "01-09-2018"));
         // this.tasks.push(new Task(2,"Task 2", false, "01-08-2018"));
         // this.tasks.push(new Task(3,"Task 3", false, "01-07-2018"));
-        return this.taskService.getTasks()
+        this.taskService.getTasks()
             .subscribe(
                 (tasks: any[])=>{
                     this.tasks = tasks;
                 },
                 (error) => console.log(error)
             );
+        this.taskService.onTaskAdded.subscribe(
+            (task: Task) => this.tasks.push(task)
+        );
     }
 
     getDueDateLabel(task: Task){
@@ -31,7 +34,7 @@ export class TasksListComponent implements OnInit {
     }
 
     onTaskChange(event, task){
-        console.log('Task has changed')
+        this.taskService.saveTask(task, event.target.checked).subscribe();
     }
 
 }
